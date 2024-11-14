@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Contracts>
+	<Contract>
+		<Id>1</Id>
+		<PropertyId>1</PropertyId>
+		<SellerId>2</SellerId>
+		<BuyerId>1</BuyerId>
+		<Price>300000</Price>
+		<SignDate>2024-01-15T00:00:00</SignDate>
+		<ContractExpiration/>
+	</Contract>
+	<Contract>
+		<Id>2</Id>
+		<PropertyId>2</PropertyId>
+		<SellerId>1</SellerId>
+		<BuyerId>2</BuyerId>
+		<Price>1500</Price>
+		<SignDate>2024-02-01T00:00:00</SignDate>
+		<ContractExpiration>2025-02-01T00:00:00</ContractExpiration>
+	</Contract>
+</Contracts>
