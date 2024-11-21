@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace RealEstate
 {
-    public class PropertyDB
+    /*public class PropertyDB
     {
-        public PropertyDB(string Address, int District, int Rooms, decimal Area)
+        public PropertyDB(string Address, int District, int Rooms, double Area)
         {
             this.Address = Address;
             this.District = District;
@@ -25,13 +25,13 @@ namespace RealEstate
         [Required]
         public int Rooms { get; set; }
         [Required]
-        public decimal Area { get; set; }
+        public double Area { get; set; }
         public int SellingPrice { get; set; }
         public int RentPrice { get; set; }
-    }
+    }*/
     public class PropertyDbContext : DbContext
     {
-        public DbSet<PropertyDB> Properties { get; set; }
+        public DbSet<Property> Properties { get; set; }
         public PropertyDbContext()
         {
             Database.EnsureCreated();

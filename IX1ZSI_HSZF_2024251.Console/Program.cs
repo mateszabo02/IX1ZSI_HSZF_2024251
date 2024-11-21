@@ -54,6 +54,16 @@ namespace RealEstate
             
             Property properties = new Property();
             properties.Load();
+            
+            PropertyDbContext ctx = new PropertyDbContext();
+            ctx.Properties.Add(new Property()
+            {
+                Address = "Budapest",
+                District = 9,
+                Rooms = 3,
+                Area = 120.5
+            });
+            ctx.SaveChanges();
         }
     }
 }
