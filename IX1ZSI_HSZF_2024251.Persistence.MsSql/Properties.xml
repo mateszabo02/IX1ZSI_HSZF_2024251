@@ -5,7 +5,7 @@
 		<Address>123 Main St</Address>
 		<District>5</District>
 		<Rooms>3</Rooms>
-		<Area>120.5</Area>
+		<Area>120,5</Area>
 		<SellingPrice>300000</SellingPrice>
 		<RentPrice/>
 	</Property>
@@ -14,7 +14,7 @@
 		<Address>456 Elm St</Address>
 		<District>2</District>
 		<Rooms>2</Rooms>
-		<Area>85.0</Area>
+		<Area>85,0</Area>
 		<SellingPrice/>
 		<RentPrice/>
 	</Property>

@@ -13,8 +13,8 @@
 		</DistrictPreferences>
 		<MinRooms>2</MinRooms>
 		<MaxRooms>4</MaxRooms>
-		<MinArea>100.0</MinArea>
-		<MaxArea>150.0</MaxArea>
+		<MinArea>100,0</MinArea>
+		<MaxArea>150,0</MaxArea>
 		<MinPrice>200000</MinPrice>
 		<MaxPrice>400000</MaxPrice>
 		<LookingForRent>false</LookingForRent>
@@ -32,8 +32,8 @@
 		</DistrictPreferences>
 		<MinRooms>1</MinRooms>
 		<MaxRooms>3</MaxRooms>
-		<MinArea>50.0</MinArea>
-		<MaxArea>100.0</MaxArea>
+		<MinArea>50,0</MinArea>
+		<MaxArea>100,0</MaxArea>
 		<MinPrice/>
 		<MaxPrice/>
 		<LookingForRent>true</LookingForRent>
