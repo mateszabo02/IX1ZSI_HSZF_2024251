@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,9 +9,20 @@ using System.Xml.Linq;
 
 namespace RealEstate
 {
-    public partial class Property
+    [Table("property")]
+    public class Property : Entity
     {
-
+        public Property() { }
+        public Property(int Id, string Address, int District, int Rooms, double Area, int SellingPrice, int RentPrice)
+        {
+            this.Id = Id;
+            this.Address = Address;
+            this.District = District;
+            this.Rooms = Rooms;
+            this.Area = Area;
+            this.SellingPrice = SellingPrice;
+            this.RentPrice = RentPrice;
+        }
         /// <remarks/>
         public int Id
         {
