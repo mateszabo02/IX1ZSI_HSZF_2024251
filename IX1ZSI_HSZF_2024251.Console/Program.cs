@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestPlatform.Common.Utilities;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
@@ -33,8 +34,8 @@ namespace RealEstate
             var customerService = serviceProvider.GetService<ICustomerRepository>();
             var contractService = serviceProvider.GetService<IContractRepository>();
 
-            //propertyService.PropertyInserted += ListMatchingCustomers;
-            //customerService.CustomerInserted += ListMatchingProperties;
+            propertyService.PropertyInserted += ListMatchingCustomers;
+            customerService.CustomerInserted += ListMatchingProperties;
 
             //Összes property listázása az adatbázisból
             void ListAllProperties()
@@ -78,7 +79,7 @@ namespace RealEstate
                 Console.WriteLine("Enter Address: ");
                 property.Address = Console.ReadLine();
                 Console.WriteLine("Enter Area of property: ");
-                property.Area = double.Parse(Console.ReadLine());
+                property.Area = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
                 Console.WriteLine("Enter number of Rooms: ");
                 property.Rooms = int.Parse(Console.ReadLine());
                 Console.WriteLine("Enter SellingPrice");
@@ -140,18 +141,18 @@ namespace RealEstate
                 Console.WriteLine("Enter the maximum number of Rooms");
                 customer.MaxRooms = int.Parse(Console.ReadLine());
                 Console.WriteLine("Enter the minimum Area of the property");
-                customer.MinArea = double.Parse(Console.ReadLine());
+                customer.MinArea = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
                 Console.WriteLine("Enter the maximum Area of the property");
-                customer.MaxArea = double.Parse(Console.ReadLine());
+                customer.MaxArea = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
                 Console.WriteLine("Enter the minimum Price of the property");
                 customer.MinPrice = int.Parse(Console.ReadLine());
                 Console.WriteLine("Enter the minimum Price of the property");
                 customer.MaxPrice = UInt32.Parse(Console.ReadLine());
 
                 Console.WriteLine("Looking for a rent? (true/false) ");
-                customer.LookingForRent = Convert.ToBoolean(Console.ReadLine());
+                customer.LookingForRent = bool.Parse(Console.ReadLine());
                 Console.WriteLine("Looking for a purchase? (true/false) ");
-                customer.LookingForPurchase = Convert.ToBoolean(Console.ReadLine());
+                customer.LookingForPurchase = bool.Parse(Console.ReadLine());
 
                 customerService.Create(customer);
             }
@@ -173,7 +174,7 @@ namespace RealEstate
                 Console.WriteLine($"The buyer's data: {customerService.Read(contract.BuyerId).ToString()}");
 
                 Console.Write("Enter the Price: ");
-                contract.Price = int.Parse(Console.ReadLine());
+                contract.Price = UInt32.Parse(Console.ReadLine());
                 Console.Write("Enter the SignDate: ");
                 contract.SignDate = DateTime.Parse(Console.ReadLine());
                 Console.Write("Enter the ContractExpiration: ");
@@ -225,7 +226,7 @@ namespace RealEstate
                 Console.Write($"Enter the Address (Existing: {update.Address}): ");
                 update.Address = Console.ReadLine();
                 Console.Write($"Enter the Area (Existing: {update.Area}): ");
-                update.Area = double.Parse(Console.ReadLine());
+                update.Area = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
                 Console.Write($"Enter the number of Rooms (Existing: {update.Rooms}): ");
                 update.Rooms = int.Parse(Console.ReadLine());
                 Console.Write($"Enter the SellingPrice (Existing: {update.SellingPrice}): ");
@@ -252,9 +253,9 @@ namespace RealEstate
                 update.MaxRooms = int.Parse(Console.ReadLine());
 
                 Console.Write($"Enter the minimum area of property (existing: {update.MinArea}): ");
-                update.MinArea = double.Parse(Console.ReadLine());
+                update.MinArea = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
                 Console.Write($"Enter the maximum area of property (existing: {update.MaxArea}): ");
-                update.MaxArea = double.Parse(Console.ReadLine());
+                update.MaxArea = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
                 Console.Write($"Enter the minimum price of property (existing: {update.MinPrice}): ");
                 update.MinPrice = int.Parse(Console.ReadLine());
@@ -263,14 +264,9 @@ namespace RealEstate
 
 
                 Console.Write("Looking for rent? (true/false) ");
-                update.LookingForRent = Convert.ToBoolean(Console.ReadLine());
+                update.LookingForRent = bool.Parse(Console.ReadLine());
                 Console.Write("Looking for purchase? (true/false) ");
-                update.LookingForPurchase = Convert.ToBoolean(Console.ReadLine());
-
-                /*List<int> x = new List<int> { 1, 12, 23 };
-
-                updateCustomer.DistrictPreferences = x;*/
-
+                update.LookingForPurchase = bool.Parse(Console.ReadLine());
                 customerService.Update(update);
                 Console.Write("The customer saved.");
                 Console.ReadKey();
@@ -280,12 +276,12 @@ namespace RealEstate
             void UpdateContract()
             {
                 Console.WriteLine("Enter the contract's Id to update:");
-                int contractId = Convert.ToInt32(Console.ReadLine());
+                int contractId = int.Parse(Console.ReadLine());
 
                 Contract update = contractService.Read(contractId);
 
                 Console.Write($"Enter the Price (existing: {update.Price}): ");
-                update.Price = int.Parse(Console.ReadLine());
+                update.Price = UInt32.Parse(Console.ReadLine());
                 Console.Write($"Enter the SignDate (existing: {update.SignDate}): ");
                 update.SignDate = DateTime.Parse(Console.ReadLine());
                 Console.Write($"Enter the ConractExpiration (existing: {update.ContractExpiration}): ");
@@ -344,7 +340,7 @@ namespace RealEstate
                 double? minArea = null;
                 try
                 {
-                    minArea = double.Parse(Console.ReadLine());
+                    minArea = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
                 }
                 catch (FormatException ex)
                 {
@@ -355,7 +351,7 @@ namespace RealEstate
                 double? maxArea = null;
                 try
                 {
-                    maxArea = double.Parse(Console.ReadLine());
+                    maxArea = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
                 }
                 catch (FormatException ex)
                 {
@@ -475,7 +471,7 @@ namespace RealEstate
                 double? minArea = null;
                 try
                 {
-                    minArea = double.Parse(Console.ReadLine());
+                    minArea = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
                 }
                 catch (FormatException ex)
                 {
@@ -486,7 +482,7 @@ namespace RealEstate
                 double? maxArea = null;
                 try
                 {
-                    maxArea = double.Parse(Console.ReadLine());
+                    maxArea = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
                 }
                 catch (FormatException ex)
                 {
@@ -743,142 +739,74 @@ namespace RealEstate
                 //Property
                 XDocument xdoc = XDocument.Load("RealEstate.xml");
                 List<Property> properties = new List<Property>();
+                Dictionary<int, int> propertyIds = new Dictionary<int, int>();
+                Dictionary<int, int> customerIds = new Dictionary<int, int>();
                 foreach (var item in xdoc.Descendants("Property"))
                 {
-                    if (item.Element("SellingPrice").Value == "" && item.Element("RentPrice").Value == "")
-                    {
+                    Property newProperty = new Property();
+                    newProperty.Address = item.Element("Address").Value;
+                    newProperty.District = int.Parse(item.Element("District").Value);
+                    newProperty.Rooms = int.Parse(item.Element("Rooms").Value);
+                    newProperty.Area = double.Parse(item.Element("Area").Value, CultureInfo.InvariantCulture);
+                    newProperty.SellingPrice = (item.Element("SellingPrice").Value == "") ? null : UInt32.Parse(item.Element("SellingPrice").Value);
+                    newProperty.RentPrice = (item.Element("RentPrice").Value == "") ? null : int.Parse(item.Element("RentPrice").Value);
+                    propertyService.Create(newProperty);
 
-                        properties.Add(new Property()
-                        {
-                            //Id = int.Parse(item.Element("Id").Value),
-                            Address = item.Element("Address").Value,
-                            District = int.Parse(item.Element("District").Value),
-                            Rooms = int.Parse(item.Element("Rooms").Value),
-                            Area = double.Parse(item.Element("Area").Value)
-                        });
-                    }
-                    else if (item.Element("SellingPrice").Value == "" && item.Element("RentPrice").Value != "")
-                    {
-                        properties.Add(new Property()
-                        {
-                            //Id = int.Parse(item.Element("Id").Value),
-                            Address = item.Element("Address").Value,
-                            District = int.Parse(item.Element("District").Value),
-                            Rooms = int.Parse(item.Element("Rooms").Value),
-                            Area = double.Parse(item.Element("Area").Value),
-                            RentPrice = int.Parse(item.Element("RentPrice").Value)
-                        });
-                    }
-                    else if (item.Element("SellingPrice").Value != "" && item.Element("RentPrice").Value == "")
-                    {
-                        properties.Add(new Property()
-                        {
-                            //Id = int.Parse(item.Element("Id").Value),
-                            Address = item.Element("Address").Value,
-                            District = int.Parse(item.Element("District").Value),
-                            Rooms = int.Parse(item.Element("Rooms").Value),
-                            Area = double.Parse(item.Element("Area").Value),
-                            SellingPrice = UInt32.Parse(item.Element("SellingPrice").Value),
-                        });
-                    }
-                    else
-                    {
-                        properties.Add(new Property()
-                        {
-                            //Id = int.Parse(item.Element("Id").Value),
-                            Address = item.Element("Address").Value,
-                            District = int.Parse(item.Element("District").Value),
-                            Rooms = int.Parse(item.Element("Rooms").Value),
-                            Area = double.Parse(item.Element("Area").Value),
-                            SellingPrice = UInt32.Parse(item.Element("SellingPrice").Value),
-                            RentPrice = int.Parse(item.Element("RentPrice").Value)
-                        });
-                    }
-                }
-                foreach (var property in properties)
-                {
-                    propertyService.Create(property);
+                    propertyIds.Add(int.Parse(item.Element("Id").Value), newProperty.Id);
                 }
 
                 //Customers
                 List<Customer> customers = new List<Customer>();
                 foreach (var item in xdoc.Descendants("Customer"))
                 {
-                    if (item.Element("MinPrice").Value == "" && item.Element("MaxPrice").Value == "")
-                    {
-                        customers.Add(new Customer()
-                        {
-                            Id = int.Parse(item.Element("Id").Value),
-                            //OwnedProperties = int.Parse(item.Elements("OwnedProperties")),
-                            //RentedProperties = int.Parse(item.Elements("RentedProperties")),
-                            //DistrictPreferences = int.Parse(item.Elements("DistrictPreferences")),
-                            MinRooms = int.Parse(item.Element("MinRooms").Value),
-                            MaxRooms = int.Parse(item.Element("MaxRooms").Value),
-                            MinArea = double.Parse(item.Element("MinArea").Value),
-                            MaxArea = double.Parse(item.Element("MaxArea").Value),
-                            LookingForRent = bool.Parse(item.Element("LookingForRent").Value),
-                            LookingForPurchase = bool.Parse(item.Element("LookingForPurchase").Value)
-                        });
-                    }
-                    else if (item.Element("MinPrice").Value != "" && item.Element("MaxPrice").Value == "")
-                    {
-                        customers.Add(new Customer()
-                        {
+                    Customer newCustomer = new Customer();
+                    newCustomer.MinRooms = int.Parse(item.Element("MinRooms").Value);
+                    newCustomer.MaxRooms = int.Parse(item.Element("MaxRooms").Value);
+                    newCustomer.MinArea = double.Parse(item.Element("MinArea").Value, CultureInfo.InvariantCulture);
+                    newCustomer.MaxArea = double.Parse(item.Element("MaxArea").Value, CultureInfo.InvariantCulture);
+                    newCustomer.LookingForRent = bool.Parse(item.Element("LookingForRent").Value);
+                    newCustomer.LookingForPurchase = bool.Parse(item.Element("LookingForPurchase").Value);
 
-                            Id = int.Parse(item.Element("Id").Value),
-                            //OwnedProperties = int.Parse(item.Elements("OwnedProperties")),
-                            //RentedProperties = int.Parse(item.Elements("RentedProperties")),
-                            //DistrictPreferences = int.Parse(item.Elements("DistrictPreferences")),
-                            MinRooms = int.Parse(item.Element("MinRooms").Value),
-                            MaxRooms = int.Parse(item.Element("MaxRooms").Value),
-                            MinArea = double.Parse(item.Element("MinArea").Value),
-                            MaxArea = double.Parse(item.Element("MaxArea").Value),
-                            MinPrice = int.Parse(item.Element("MinPrice").Value),
-                            LookingForRent = bool.Parse(item.Element("LookingForRent").Value),
-                            LookingForPurchase = bool.Parse(item.Element("LookingForPurchase").Value)
-                        });
-                    }
-                    else if (item.Element("MinPrice").Value == "" && item.Element("MaxPrice").Value != "")
-                    {
-                        customers.Add(new Customer()
-                        {
+                    newCustomer.MinPrice = (item.Element("MinPrice").Value == "") ? null : int.Parse(item.Element("MinPrice").Value);
+                    newCustomer.MaxPrice = (item.Element("MaxPrice").Value == "") ? null : UInt32.Parse(item.Element("MaxPrice").Value);
 
-                            Id = int.Parse(item.Element("Id").Value),
-                            //OwnedProperties = int.Parse(item.Elements("OwnedProperties")),
-                            //RentedProperties = int.Parse(item.Elements("RentedProperties")),
-                            //DistrictPreferences = int.Parse(item.Elements("DistrictPreferences")),
-                            MinRooms = int.Parse(item.Element("MinRooms").Value),
-                            MaxRooms = int.Parse(item.Element("MaxRooms").Value),
-                            MinArea = double.Parse(item.Element("MinArea").Value),
-                            MaxArea = double.Parse(item.Element("MaxArea").Value),
-                            MaxPrice = UInt32.Parse(item.Element("MaxPrice").Value),
-                            LookingForRent = bool.Parse(item.Element("LookingForRent").Value),
-                            LookingForPurchase = bool.Parse(item.Element("LookingForPurchase").Value)
-                        });
-                    }
-                    else
+                    List<int> prefDist = new List<int>();
+                    var xmlDP = item.Descendants("DistrictPreferences");
+                    foreach (var tag in xmlDP.Elements("int"))
                     {
-                        customers.Add(new Customer()
-                        {
-
-                            Id = int.Parse(item.Element("Id").Value),
-                            //OwnedProperties = int.Parse(item.Elements("OwnedProperties")),
-                            //RentedProperties = int.Parse(item.Elements("RentedProperties")),
-                            //DistrictPreferences = int.Parse(item.Elements("DistrictPreferences")),
-                            MinRooms = int.Parse(item.Element("MinRooms").Value),
-                            MaxRooms = int.Parse(item.Element("MaxRooms").Value),
-                            MinArea = double.Parse(item.Element("MinArea").Value),
-                            MaxArea = double.Parse(item.Element("MaxArea").Value),
-                            MinPrice = int.Parse(item.Element("MinPrice").Value),
-                            MaxPrice = UInt32.Parse(item.Element("MaxPrice").Value),
-                            LookingForRent = bool.Parse(item.Element("LookingForRent").Value),
-                            LookingForPurchase = bool.Parse(item.Element("LookingForPurchase").Value)
-                        });
+                        prefDist.Add(int.Parse(tag.Value));
                     }
+                    newCustomer.DistrictPreferences = prefDist;
+
+                    var xmlOwnedP = item.Descendants("OwnedProperties");
+                    foreach (var propId in xmlOwnedP.Elements("int"))
+                    {
+                        newCustomer.OwnedProperties.Add(propertyService.Read(propertyIds[int.Parse(propId.Value)]));
+                    }
+
+                    var xmlRentedP = item.Descendants("RentedProperties");
+                    foreach (var propId in xmlRentedP.Elements("int"))
+                    {
+                        newCustomer.RentedProperties.Add(propertyService.Read(propertyIds[int.Parse(propId.Value)]));
+                    }
+
+                    customerService.Create(newCustomer);
+                    customerIds.Add(int.Parse(item.Element("Id").Value), newCustomer.Id);
                 }
-                foreach (var customer in customers)
+                //Contracts
+                List<Contract> contracts = new List<Contract>();
+                foreach (var item in xdoc.Descendants("Contract"))
                 {
-                    customerService.Create(customer);
+                    Contract newContract = new Contract();
+                    ;
+                    newContract.PropertyId = propertyIds[int.Parse(item.Element("PropertyId").Value)];
+                    newContract.SellerId = customerIds[int.Parse(item.Element("SellerId").Value)];
+                    newContract.BuyerId = customerIds[int.Parse(item.Element("BuyerId").Value)];
+                    newContract.Price = UInt32.Parse(item.Element("Price").Value);
+                    newContract.SignDate = DateTime.Parse(item.Element("SignDate").Value);
+                    newContract.ContractExpiration = (item.Element("ContractExpiration").Value == "") ? null : DateTime.Parse(item.Element("ContractExpiration").Value);
+
+                    contractService.Create(newContract);
                 }
 
             }
@@ -944,7 +872,7 @@ namespace RealEstate
                     XElement sub = new XElement("Contract");
                     sub.Add(new XElement("Id", item.Id));
                     sub.Add(new XElement("PropertyId", item.PropertyId));
-                    sub.Add(new XElement("SellerID", item.SellerId));
+                    sub.Add(new XElement("SellerId", item.SellerId));
                     sub.Add(new XElement("BuyerId", item.BuyerId));
                     sub.Add(new XElement("Price", item.Price));
                     sub.Add(new XElement("SignDate", item.SignDate));
@@ -973,7 +901,7 @@ namespace RealEstate
                     sub.Add(new XElement("Area", item.Area));
                     sub.Add(new XElement("SellingPrice", item.SellingPrice));
                     sub.Add(new XElement("RentPrice", item.RentPrice));
-                    root.Add(sub);
+                    root1.Add(sub);
                 }
 
                 XElement root2 = new XElement("Customers");
@@ -982,13 +910,28 @@ namespace RealEstate
                 {
                     XElement sub = new XElement("Customer");
                     sub.Add(new XElement("Id", item.Id));
-                    sub.Add(new XElement("OwnedProperties", item.OwnedProperties));
-                    sub.Add(new XElement("RentedProperties", item.RentedProperties));
-                    XElement sub2 = new XElement("DistrictPreferences");
+                    //sub.Add(new XElement("OwnedProperties", item.OwnedProperties));
+                    XElement subOP = new XElement("OwnedProperties");
+                    foreach (var op in item.OwnedProperties.ToList())
+                    {
+                        subOP.Add(new XElement("int", op.Id));
+                    }
+                    sub.Add(subOP);
+
+                    XElement subRP = new XElement("RentedProperties");
+                    foreach (var rp in item.RentedProperties.ToList())
+                    {
+                        subRP.Add(new XElement("int", rp.Id));
+                    }
+                    sub.Add(subRP);
+
+                    XElement subDP = new XElement("DistrictPreferences");
                     foreach (var dp in item.DistrictPreferences.ToList())
                     {
-                        sub2.Add(new XElement("int", dp));
+                        subDP.Add(new XElement("int", dp));
                     }
+
+                    sub.Add(subDP);
                     sub.Add(new XElement("MinRooms", item.MinRooms));
                     sub.Add(new XElement("MaxRooms", item.MaxRooms));
                     sub.Add(new XElement("MinArea", item.MinArea));
@@ -1007,7 +950,7 @@ namespace RealEstate
                     XElement sub = new XElement("Contract");
                     sub.Add(new XElement("Id", item.Id));
                     sub.Add(new XElement("PropertyId", item.PropertyId));
-                    sub.Add(new XElement("SellerID", item.SellerId));
+                    sub.Add(new XElement("SellerId", item.SellerId));
                     sub.Add(new XElement("BuyerId", item.BuyerId));
                     sub.Add(new XElement("Price", item.Price));
                     sub.Add(new XElement("SignDate", item.SignDate));
