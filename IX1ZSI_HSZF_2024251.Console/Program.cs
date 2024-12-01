@@ -737,6 +737,151 @@ namespace RealEstate
 
             }
 
+            //Inport Db from Xml
+            void DbFromXml()
+            {
+                //Property
+                XDocument xdoc = XDocument.Load("RealEstate.xml");
+                List<Property> properties = new List<Property>();
+                foreach (var item in xdoc.Descendants("Property"))
+                {
+                    if (item.Element("SellingPrice").Value == "" && item.Element("RentPrice").Value == "")
+                    {
+
+                        properties.Add(new Property()
+                        {
+                            //Id = int.Parse(item.Element("Id").Value),
+                            Address = item.Element("Address").Value,
+                            District = int.Parse(item.Element("District").Value),
+                            Rooms = int.Parse(item.Element("Rooms").Value),
+                            Area = double.Parse(item.Element("Area").Value)
+                        });
+                    }
+                    else if (item.Element("SellingPrice").Value == "" && item.Element("RentPrice").Value != "")
+                    {
+                        properties.Add(new Property()
+                        {
+                            //Id = int.Parse(item.Element("Id").Value),
+                            Address = item.Element("Address").Value,
+                            District = int.Parse(item.Element("District").Value),
+                            Rooms = int.Parse(item.Element("Rooms").Value),
+                            Area = double.Parse(item.Element("Area").Value),
+                            RentPrice = int.Parse(item.Element("RentPrice").Value)
+                        });
+                    }
+                    else if (item.Element("SellingPrice").Value != "" && item.Element("RentPrice").Value == "")
+                    {
+                        properties.Add(new Property()
+                        {
+                            //Id = int.Parse(item.Element("Id").Value),
+                            Address = item.Element("Address").Value,
+                            District = int.Parse(item.Element("District").Value),
+                            Rooms = int.Parse(item.Element("Rooms").Value),
+                            Area = double.Parse(item.Element("Area").Value),
+                            SellingPrice = UInt32.Parse(item.Element("SellingPrice").Value),
+                        });
+                    }
+                    else
+                    {
+                        properties.Add(new Property()
+                        {
+                            //Id = int.Parse(item.Element("Id").Value),
+                            Address = item.Element("Address").Value,
+                            District = int.Parse(item.Element("District").Value),
+                            Rooms = int.Parse(item.Element("Rooms").Value),
+                            Area = double.Parse(item.Element("Area").Value),
+                            SellingPrice = UInt32.Parse(item.Element("SellingPrice").Value),
+                            RentPrice = int.Parse(item.Element("RentPrice").Value)
+                        });
+                    }
+                }
+                foreach (var property in properties)
+                {
+                    propertyService.Create(property);
+                }
+
+                //Customers
+                List<Customer> customers = new List<Customer>();
+                foreach (var item in xdoc.Descendants("Customer"))
+                {
+                    if (item.Element("MinPrice").Value == "" && item.Element("MaxPrice").Value == "")
+                    {
+                        customers.Add(new Customer()
+                        {
+                            Id = int.Parse(item.Element("Id").Value),
+                            //OwnedProperties = int.Parse(item.Elements("OwnedProperties")),
+                            //RentedProperties = int.Parse(item.Elements("RentedProperties")),
+                            //DistrictPreferences = int.Parse(item.Elements("DistrictPreferences")),
+                            MinRooms = int.Parse(item.Element("MinRooms").Value),
+                            MaxRooms = int.Parse(item.Element("MaxRooms").Value),
+                            MinArea = double.Parse(item.Element("MinArea").Value),
+                            MaxArea = double.Parse(item.Element("MaxArea").Value),
+                            LookingForRent = bool.Parse(item.Element("LookingForRent").Value),
+                            LookingForPurchase = bool.Parse(item.Element("LookingForPurchase").Value)
+                        });
+                    }
+                    else if (item.Element("MinPrice").Value != "" && item.Element("MaxPrice").Value == "")
+                    {
+                        customers.Add(new Customer()
+                        {
+
+                            Id = int.Parse(item.Element("Id").Value),
+                            //OwnedProperties = int.Parse(item.Elements("OwnedProperties")),
+                            //RentedProperties = int.Parse(item.Elements("RentedProperties")),
+                            //DistrictPreferences = int.Parse(item.Elements("DistrictPreferences")),
+                            MinRooms = int.Parse(item.Element("MinRooms").Value),
+                            MaxRooms = int.Parse(item.Element("MaxRooms").Value),
+                            MinArea = double.Parse(item.Element("MinArea").Value),
+                            MaxArea = double.Parse(item.Element("MaxArea").Value),
+                            MinPrice = int.Parse(item.Element("MinPrice").Value),
+                            LookingForRent = bool.Parse(item.Element("LookingForRent").Value),
+                            LookingForPurchase = bool.Parse(item.Element("LookingForPurchase").Value)
+                        });
+                    }
+                    else if (item.Element("MinPrice").Value == "" && item.Element("MaxPrice").Value != "")
+                    {
+                        customers.Add(new Customer()
+                        {
+
+                            Id = int.Parse(item.Element("Id").Value),
+                            //OwnedProperties = int.Parse(item.Elements("OwnedProperties")),
+                            //RentedProperties = int.Parse(item.Elements("RentedProperties")),
+                            //DistrictPreferences = int.Parse(item.Elements("DistrictPreferences")),
+                            MinRooms = int.Parse(item.Element("MinRooms").Value),
+                            MaxRooms = int.Parse(item.Element("MaxRooms").Value),
+                            MinArea = double.Parse(item.Element("MinArea").Value),
+                            MaxArea = double.Parse(item.Element("MaxArea").Value),
+                            MaxPrice = UInt32.Parse(item.Element("MaxPrice").Value),
+                            LookingForRent = bool.Parse(item.Element("LookingForRent").Value),
+                            LookingForPurchase = bool.Parse(item.Element("LookingForPurchase").Value)
+                        });
+                    }
+                    else
+                    {
+                        customers.Add(new Customer()
+                        {
+
+                            Id = int.Parse(item.Element("Id").Value),
+                            //OwnedProperties = int.Parse(item.Elements("OwnedProperties")),
+                            //RentedProperties = int.Parse(item.Elements("RentedProperties")),
+                            //DistrictPreferences = int.Parse(item.Elements("DistrictPreferences")),
+                            MinRooms = int.Parse(item.Element("MinRooms").Value),
+                            MaxRooms = int.Parse(item.Element("MaxRooms").Value),
+                            MinArea = double.Parse(item.Element("MinArea").Value),
+                            MaxArea = double.Parse(item.Element("MaxArea").Value),
+                            MinPrice = int.Parse(item.Element("MinPrice").Value),
+                            MaxPrice = UInt32.Parse(item.Element("MaxPrice").Value),
+                            LookingForRent = bool.Parse(item.Element("LookingForRent").Value),
+                            LookingForPurchase = bool.Parse(item.Element("LookingForPurchase").Value)
+                        });
+                    }
+                }
+                foreach (var customer in customers)
+                {
+                    customerService.Create(customer);
+                }
+
+            }
             //Exporting Db to XML
             void ExportCustomersToXML()
             {
@@ -749,12 +894,17 @@ namespace RealEstate
                     sub.Add(new XElement("Id", item.Id));
                     sub.Add(new XElement("OwnedProperties", item.OwnedProperties));
                     sub.Add(new XElement("RentedProperties", item.RentedProperties));
-                    sub.Add(new XElement("DistrictPreferences", item.DistrictPreferences));
+                    XElement sub2 = new XElement("DistrictPreferences");
+                    foreach (var dp in item.DistrictPreferences.ToList())
+                    {
+                        sub2.Add(new XElement("int", dp));
+                    }
                     sub.Add(new XElement("MinRooms", item.MinRooms));
                     sub.Add(new XElement("MaxRooms", item.MaxRooms));
                     sub.Add(new XElement("MinArea", item.MinArea));
                     sub.Add(new XElement("MaxArea", item.MaxArea));
                     sub.Add(new XElement("MinPrice", item.MinPrice));
+                    sub.Add(new XElement("MaxPrice", item.MaxPrice));
                     sub.Add(new XElement("LookingForRent", item.LookingForRent));
                     sub.Add(new XElement("LookingForPurchase", item.LookingForPurchase));
                     root.Add(sub);
@@ -805,6 +955,155 @@ namespace RealEstate
                 Console.Write("Contracts saved to 'Contracts.xml'");
                 Console.ReadKey();
             }
+            void RealEstateToXml()
+            {
+                XDocument xml = new XDocument();
+                XElement root = new XElement("RealEstate");
+                xml.Add(root);
+
+                XElement root1 = new XElement("Properties");
+                root.Add(root1);
+                foreach (var item in propertyService.ReadAll().ToList())
+                {
+                    XElement sub = new XElement("Property");
+                    sub.Add(new XElement("Id", item.Id));
+                    sub.Add(new XElement("Address", item.Address));
+                    sub.Add(new XElement("District", item.District));
+                    sub.Add(new XElement("Rooms", item.Rooms));
+                    sub.Add(new XElement("Area", item.Area));
+                    sub.Add(new XElement("SellingPrice", item.SellingPrice));
+                    sub.Add(new XElement("RentPrice", item.RentPrice));
+                    root.Add(sub);
+                }
+
+                XElement root2 = new XElement("Customers");
+                root.Add(root2);
+                foreach (var item in customerService.ReadAll().ToList())
+                {
+                    XElement sub = new XElement("Customer");
+                    sub.Add(new XElement("Id", item.Id));
+                    sub.Add(new XElement("OwnedProperties", item.OwnedProperties));
+                    sub.Add(new XElement("RentedProperties", item.RentedProperties));
+                    XElement sub2 = new XElement("DistrictPreferences");
+                    foreach (var dp in item.DistrictPreferences.ToList())
+                    {
+                        sub2.Add(new XElement("int", dp));
+                    }
+                    sub.Add(new XElement("MinRooms", item.MinRooms));
+                    sub.Add(new XElement("MaxRooms", item.MaxRooms));
+                    sub.Add(new XElement("MinArea", item.MinArea));
+                    sub.Add(new XElement("MaxArea", item.MaxArea));
+                    sub.Add(new XElement("MinPrice", item.MinPrice));
+                    sub.Add(new XElement("MaxPrice", item.MaxPrice));
+                    sub.Add(new XElement("LookingForRent", item.LookingForRent));
+                    sub.Add(new XElement("LookingForPurchase", item.LookingForPurchase));
+                    root2.Add(sub);
+                }
+
+                XElement root3 = new XElement("Contracts");
+                root.Add(root3);
+                foreach (var item in contractService.ReadAll().ToList())
+                {
+                    XElement sub = new XElement("Contract");
+                    sub.Add(new XElement("Id", item.Id));
+                    sub.Add(new XElement("PropertyId", item.PropertyId));
+                    sub.Add(new XElement("SellerID", item.SellerId));
+                    sub.Add(new XElement("BuyerId", item.BuyerId));
+                    sub.Add(new XElement("Price", item.Price));
+                    sub.Add(new XElement("SignDate", item.SignDate));
+                    sub.Add(new XElement("ContractExpiration", item.ContractExpiration));
+                    root3.Add(sub);
+                }
+                xml.Save("RealEstate.xml");
+                Console.Write("RealEstate saved to 'RealEstate.xml'");
+                Console.ReadKey();
+            }
+
+            //Exporting Db to TXT
+            void CustomerExportToTxt()
+            {
+                Console.Write("Enter the Path: ");
+                string path = Console.ReadLine();
+                Console.Write("Enter the name of the txt: ");
+                string txt = Console.ReadLine();
+
+                using (StreamWriter writer = new StreamWriter(Path.Combine(path, txt)))
+                { 
+                    foreach (var item in customerService.ReadAll().ToList())
+                    {
+                        writer.WriteLine($"Id: {item.Id}");
+                        writer.WriteLine($"OwnedProperties: ");
+                        foreach (var i in item.OwnedProperties.ToList())
+                        {
+                            writer.WriteLine(i.ToString());
+                        }
+                        writer.WriteLine($"RentedProperties: ");
+                        foreach (var i in item.RentedProperties.ToList())
+                        {
+                            writer.WriteLine(i.ToString());
+                        }
+                        writer.WriteLine("DistrictPreferences");
+                        foreach (var i in item.DistrictPreferences.ToList())
+                        {
+                            writer.WriteLine(i);
+                        }
+                        writer.WriteLine($"MinRooms: {item.MinRooms}");
+                        writer.WriteLine($"MaxRooms: {item.MaxRooms}");
+                        writer.WriteLine($"MinArea: {item.MinArea}");
+                        writer.WriteLine($"MaxArea: {item.MaxArea}");
+                        writer.WriteLine($"MinPrice: {item.MinPrice}");
+                        writer.WriteLine($"MaxPrice: {item.MaxPrice}");
+                        writer.WriteLine($"LookingForRent: {item.LookingForRent}");
+                        writer.WriteLine($"LookingForPurchase: {item.LookingForPurchase}");
+                    }
+                }
+                Console.Write("Customers exported to Txt!");
+                Console.ReadKey();
+            }
+            void PropertyExportToTxt()
+            {
+                Console.Write("Enter the Path: ");
+                string path = Console.ReadLine();
+                Console.Write("Enter the name of the txt: ");
+                string txt = Console.ReadLine();
+                using (StreamWriter writer = new StreamWriter(Path.Combine(path, txt)))
+                {
+                    foreach (var item in propertyService.ReadAll().ToList())
+                    {
+                        writer.WriteLine($"Id: {item.Id}");
+                        writer.WriteLine($"Address: {item.Address}");
+                        writer.WriteLine($"District: {item.District}");
+                        writer.WriteLine($"Rooms: {item.Rooms}");
+                        writer.WriteLine($"Area: {item.Area}");
+                        writer.WriteLine($"SellingPrice: {item.SellingPrice}");
+                        writer.WriteLine($"RentPrice: {item.RentPrice}");
+                    }
+                }
+                Console.Write("Properties exported to Txt!");
+                Console.ReadKey();
+            }
+            void ContractExportToTxt()
+            {
+                Console.Write("Enter the Path: ");
+                string path = Console.ReadLine();
+                Console.Write("Enter the name of the txt: ");
+                string txt = Console.ReadLine();
+                using (StreamWriter writer = new StreamWriter(Path.Combine(path, txt)))
+                {
+                    foreach (var item in contractService.ReadAll().ToList())
+                    {
+                        writer.WriteLine($"Id: {item.Id}");
+                        writer.WriteLine($"PropertyId: {item.PropertyId}");
+                        writer.WriteLine($"SellerId: {item.SellerId}");
+                        writer.WriteLine($"BuyerId: {item.BuyerId}");
+                        writer.WriteLine($"Price: {item.Price}");
+                        writer.WriteLine($"SignDate: {item.SignDate}");
+                        writer.WriteLine($"ContractExpiration: {item.ContractExpiration}");
+                    }
+                }
+                Console.Write("Contracts exported to Txt!");
+                Console.ReadKey();
+            }
 
             //Menürendszer
             //Export to file
@@ -812,12 +1111,19 @@ namespace RealEstate
                 .Add("Properties To Xml", () => ExportPropertiesToXML())
                 .Add("Customers To Xml", () => ExportCustomersToXML())
                 .Add("Contracts To Xml", () => ExportContractsToXML())
+                .Add("RealEstate To Xml", () => RealEstateToXml())
+                .Add("Back To Main Menu", ConsoleMenu.Close);
+
+            var exportTxtMenu = new ConsoleMenu(args, level: 2)
+                .Add("Properties To Txt", () => PropertyExportToTxt())
+                .Add("Customers To Txt", () => CustomerExportToTxt())
+                .Add("Contracts To Txt", () => ContractExportToTxt())
                 .Add("Back To Main Menu", ConsoleMenu.Close);
 
             var fileSubMenu = new ConsoleMenu(args, level: 1)
-                .Add("Init DB from XML", ConsoleMenu.Close)
+                .Add("Init DB from XML", ()=>DbFromXml())
                 .Add("Export DB To XML", () => exportXmlMenu.Show())
-                .Add("Export data To TXTs", ConsoleMenu.Close)
+                .Add("Export data To TXTs", () =>exportTxtMenu.Show())
                 .Add("Back To Main Menu", ConsoleMenu.Close);
 
             //Properties Menu
