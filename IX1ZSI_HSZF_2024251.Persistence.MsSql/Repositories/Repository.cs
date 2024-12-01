@@ -14,19 +14,19 @@ namespace RealEstate
         this.ctx = ctx ?? throw new ArgumentNullException(nameof(ctx));
         }
 
-        public void Create(T item)
+        public virtual void Create(T item)
         {
             ctx.Set<T>().Add(item);
             ctx.SaveChanges();
         }
 
-        public void Delete(int id)
+        public virtual void Delete(int id)
         {
             ctx.Set<T>().Remove(Read(id));
             ctx.SaveChanges();
         }
 
-        public T Read(int id)
+        public virtual T Read(int id)
         {
             return ctx.Set<T>().FirstOrDefault(item => item.Id == id);
         }
@@ -36,7 +36,7 @@ namespace RealEstate
             return ctx.Set<T>();
         }
 
-        public void Update(T item)
+        public virtual void Update(T item)
         {
             var old = Read(item.Id);
             foreach(var prop in old.GetType().GetProperties())

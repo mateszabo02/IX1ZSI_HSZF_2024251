@@ -8,8 +8,13 @@ namespace RealEstate
 {
     public class PropertyRepository : Repository<Property>, IPropertyRepository
     {
-        public PropertyRepository(RealEstateDbContext ctx) : base(ctx)
+        public delegate void AddEventHandler(Property item);
+        public event AddEventHandler PropertyInserted;
+        public PropertyRepository(RealEstateDbContext context) : base(context) { }
+        public override void Create(Property item)
         {
+            base.Create(item);
+            PropertyInserted?.Invoke(item);
         }
     }
 }

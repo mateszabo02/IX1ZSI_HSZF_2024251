@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static RealEstate.PropertyRepository;
 
 namespace RealEstate
 {
-    public interface IPropertyRepository : IRepository<Property>
+    public interface ICustomerService<T> : IEntityService<T> where T : Entity
     {
-        event AddEventHandler PropertyInserted;
+
     }
 }
