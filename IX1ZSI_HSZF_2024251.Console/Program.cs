@@ -14,7 +14,7 @@ namespace RealEstate
     {
         static void Main(string[] args)
         {
-            //Adatbázis feltöltése
+            //Adatbázis, szolgáltatások inicializálása
             var host = Host.CreateDefaultBuilder().ConfigureServices((hostContext, services) =>
             {
                 services.AddScoped<RealEstateDbContext>();
@@ -585,7 +585,7 @@ namespace RealEstate
             {
                 List<Property> properties = new List<Property>();
 
-                Console.WriteLine("Search propertis for Rent. Enter the parameters:");
+                Console.WriteLine("\r\n██╗░░░██╗███╗░░██╗██████╗░███████╗██████╗░\r\n██║░░░██║████╗░██║██╔══██╗██╔════╝██╔══██╗\r\n██║░░░██║██╔██╗██║██║░░██║█████╗░░██████╔╝\r\n██║░░░██║██║╚████║██║░░██║██╔══╝░░██╔══██╗\r\n╚██████╔╝██║░╚███║██████╔╝███████╗██║░░██║\r\n░╚═════╝░╚═╝░░╚══╝╚═════╝░╚══════╝╚═╝░░╚═╝\r\n\r\n░█████╗░░█████╗░███╗░░██╗░██████╗████████╗██████╗░██╗░░░██╗░█████╗░████████╗██╗░█████╗░███╗░░██╗\r\n██╔══██╗██╔══██╗████╗░██║██╔════╝╚══██╔══╝██╔══██╗██║░░░██║██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║\r\n██║░░╚═╝██║░░██║██╔██╗██║╚█████╗░░░░██║░░░██████╔╝██║░░░██║██║░░╚═╝░░░██║░░░██║██║░░██║██╔██╗██║\r\n██║░░██╗██║░░██║██║╚████║░╚═══██╗░░░██║░░░██╔══██╗██║░░░██║██║░░██╗░░░██║░░░██║██║░░██║██║╚████║\r\n╚█████╔╝╚█████╔╝██║░╚███║██████╔╝░░░██║░░░██║░░██║╚██████╔╝╚█████╔╝░░░██║░░░██║╚█████╔╝██║░╚███║\r\n░╚════╝░░╚════╝░╚═╝░░╚══╝╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝░╚═════╝░░╚════╝░░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝");
                 /* TODO */
                 Console.ReadKey();
 
@@ -998,6 +998,7 @@ namespace RealEstate
                         writer.WriteLine($"MaxPrice: {item.MaxPrice}");
                         writer.WriteLine($"LookingForRent: {item.LookingForRent}");
                         writer.WriteLine($"LookingForPurchase: {item.LookingForPurchase}");
+                        writer.WriteLine();
                     }
                 }
                 Console.Write("Customers exported to Txt!");
@@ -1020,6 +1021,7 @@ namespace RealEstate
                         writer.WriteLine($"Area: {item.Area}");
                         writer.WriteLine($"SellingPrice: {item.SellingPrice}");
                         writer.WriteLine($"RentPrice: {item.RentPrice}");
+                        writer.WriteLine();
                     }
                 }
                 Console.Write("Properties exported to Txt!");
@@ -1042,6 +1044,7 @@ namespace RealEstate
                         writer.WriteLine($"Price: {item.Price}");
                         writer.WriteLine($"SignDate: {item.SignDate}");
                         writer.WriteLine($"ContractExpiration: {item.ContractExpiration}");
+                        writer.WriteLine();
                     }
                 }
                 Console.Write("Contracts exported to Txt!");
@@ -1073,7 +1076,7 @@ namespace RealEstate
             var propertiesSubMenu = new ConsoleMenu(args, level: 1)
                 .Add("Add new Property", () => AddNewProperty())
                 .Add("Modify existing property", () => UpdateProperty())
-                .Add("Delete existing property", () => DeleteProperty())
+                //.Add("Delete existing property", () => DeleteProperty())
                 .Add("List all properties", () => ListAllProperties())
                 .Add("Back To Main Menu", ConsoleMenu.Close);
 
@@ -1081,7 +1084,7 @@ namespace RealEstate
             var customersSubMenu = new ConsoleMenu(args, level: 1)
                 .Add("Add new Customer", () => AddNewCustomer())
                 .Add("Modify existing customer", () => UpdateCustomer())
-                .Add("Delete existing customer", () => DeleteCustomer())
+                //.Add("Delete existing customer", () => DeleteCustomer())
                 .Add("List all customers", () => ListAllCustomers())
                 .Add("Back To Main Menu", ConsoleMenu.Close);
 
@@ -1089,7 +1092,7 @@ namespace RealEstate
             var contractsSubMenu = new ConsoleMenu(args, level: 1)
                 .Add("Add new Contract", () => AddNewContract())
                 .Add("Modify existing contract", () => UpdateContract())
-                .Add("Delete existing contract", () => DeleteContract())
+                //.Add("Delete existing contract", () => DeleteContract())
                 .Add("List all contracts", () => ListAllContract())
                 .Add("Back To Main Menu", ConsoleMenu.Close);
 
